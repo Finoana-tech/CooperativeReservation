@@ -1,0 +1,11 @@
+{
+    "java.project.referencedLibraries": [
+        "d:\\projetJSP\\apache-tomcat-9.0.117-windows-x64\\apache-tomcat-9.0.117\\webapps\\CooperativeReservation\\WEB-INF\\lib\\itextpdf-5.5.13.jar",
+        "d:\\projetJSP\\apache-tomcat-9.0.117-windows-x64\\apache-tomcat-9.0.117\\lib\\jsp-api.jar",
+        "d:\\projetJSP\\apache-tomcat-9.0.117-windows-x64\\apache-tomcat-9.0.117\\lib\\servlet-api.jar"
+    ],
+    "java.project.sourcePaths": [
+        "src\\main\\java"
+    ],
+    "java.project.outputPath": "WEB-INF\\classes"
+}
