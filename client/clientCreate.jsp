@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ajouter Client - Gestion Cooperative</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/App.css">
     <style>
         :root {
             --primary-color: #1a3a5f;
@@ -58,6 +58,10 @@
             border-radius: 4px;
             text-transform: uppercase;
             font-weight: bold;
+            cursor: pointer;
+        }
+        .btn-search:hover {
+            opacity: 0.9;
         }
 
         .content-wrapper {
@@ -88,11 +92,32 @@
             font-size: 0.85rem;
             color: #555;
             text-transform: uppercase;
+            display: block;
+            margin-bottom: 5px;
         }
 
         .form-control {
-            border-radius: 4px;
+            display: block;
+            width: 100%;
+            padding: 0.375rem 0.75rem;
+            font-size: 1rem;
+            font-weight: 400;
+            line-height: 1.5;
+            color: #212529;
+            background-color: #fff;
+            background-clip: padding-box;
+            border: 1px solid #ced4da;
+            border-radius: 0.375rem;
+            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
             margin-bottom: 20px;
+        }
+
+        .form-control:focus {
+            color: #212529;
+            background-color: #fff;
+            border-color: #86b7fe;
+            outline: 0;
+            box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
         }
 
         .btn-validate {
@@ -103,6 +128,8 @@
             width: 100%;
             font-weight: bold;
             text-transform: uppercase;
+            cursor: pointer;
+            border-radius: 4px;
         }
         .btn-validate:hover { opacity: 0.9; }
 
@@ -150,8 +177,7 @@
 
 <section class="search-bar-container">
     <div class="container text-center">
-        <%-- LIEN ACCUEIL CORRIGE --%>
-        <a href="${pageContext.request.contextPath}/index.jsp" class="btn-home">Retour à l'accueil</a>
+        <a href="${pageContext.request.contextPath}/index.jsp" class="btn-home">Retour a l'accueil</a>
         
         <form action="${pageContext.request.contextPath}/ClientServlet" method="GET" class="search-form">
             <input type="text" name="search" class="search-input" placeholder="Rechercher un client par son nom ou numero de telephone...">
@@ -165,7 +191,6 @@
         <div class="form-title text-center">Enregistrement d'un nouveau client</div>
         
         <form action="${pageContext.request.contextPath}/ClientServlet" method="POST">
-            <%-- Champ caché pour dire au Servlet que c'est un ajout (facultatif si ton Servlet gère par défaut) --%>
             <input type="hidden" name="action" value="create">
 
             <div class="mb-3">
@@ -191,7 +216,6 @@
     </div>
 </footer>
 
-<%-- SCRIPTS POUR LES NOTIFICATIONS --%>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="${pageContext.request.contextPath}/js/scripts.js"></script>
 

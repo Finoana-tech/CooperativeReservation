@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ajouter une voiture - Gestion Cooperative</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/App.css">
     <style>
         :root {
             --primary-color: #1a3a5f;
@@ -71,18 +71,6 @@
             padding-bottom: 10px;
             margin-bottom: 25px;
             font-size: 1.1rem;
-        }
-
-        .form-label {
-            font-weight: bold;
-            font-size: 0.85rem;
-            color: #555;
-            text-transform: uppercase;
-        }
-
-        .form-control, .form-select {
-            border-radius: 4px;
-            margin-bottom: 15px;
         }
 
         .btn-validate {

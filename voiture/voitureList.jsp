@@ -15,7 +15,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Liste des voitures - Gestion Cooperative</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/App.css">
     <style>
         :root {
             --primary-color: #1a3a5f;
@@ -69,7 +69,8 @@
             border-radius: 4px;
         }
 
-        .table thead {
+        /* Styles pour le tableau - adaptés pour ne pas utiliser .table thead du CSS maison */
+        .table-container .table thead th {
             background-color: var(--primary-color);
             color: var(--white);
         }
@@ -230,7 +231,6 @@
             cancelButtonText: 'ANNULER'
         }).then((result) => {
             if (result.isConfirmed) {
-                // On envoie 'id' comme paramètre pour matcher VoitureServlet
                 window.location.href = "${pageContext.request.contextPath}/VoitureServlet?action=delete&id=" + id;
             }
         });

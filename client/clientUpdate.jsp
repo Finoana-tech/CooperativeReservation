@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="dao.ClientDAO, model.Client" %>
 <%
-    // On charge les données actuelles dans les champs
+    // On charge les donnees actuelles dans les champs
     ClientDAO dao = new ClientDAO();
     String idParam = request.getParameter("id");
     Client client = null;
@@ -21,7 +21,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Modifier Client - Gestion Cooperative</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/App.css">
     <style>
         :root {
             --primary-color: #1a3a5f;
@@ -103,11 +103,32 @@
             font-size: 0.85rem;
             color: #555;
             text-transform: uppercase;
+            display: block;
+            margin-bottom: 5px;
         }
 
         .form-control {
-            border-radius: 4px;
+            display: block;
+            width: 100%;
+            padding: 0.375rem 0.75rem;
+            font-size: 1rem;
+            font-weight: 400;
+            line-height: 1.5;
+            color: #212529;
+            background-color: #fff;
+            background-clip: padding-box;
+            border: 1px solid #ced4da;
+            border-radius: 0.375rem;
+            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
             margin-bottom: 20px;
+        }
+
+        .form-control:focus {
+            color: #212529;
+            background-color: #fff;
+            border-color: #86b7fe;
+            outline: 0;
+            box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
         }
 
         .btn-update {
@@ -118,6 +139,8 @@
             width: 100%;
             font-weight: bold;
             text-transform: uppercase;
+            cursor: pointer;
+            border-radius: 4px;
         }
         .btn-update:hover { opacity: 0.9; }
 
@@ -151,11 +174,10 @@
 
 <section class="search-bar-container">
     <div class="container text-center">
-        <%-- LIEN ACCUEIL CORRIGE --%>
-        <a href="${pageContext.request.contextPath}/index.jsp" class="btn-home">Retour à l'accueil</a>
+        <a href="${pageContext.request.contextPath}/index.jsp" class="btn-home">Retour a l'accueil</a>
         
         <div style="max-width: 800px; margin: 0 auto;">
-            <div class="search-input-static">Recherche désactivée pendant la modification...</div>
+            <div class="search-input-static">Recherche desactivee pendant la modification...</div>
         </div>
     </div>
 </section>
@@ -163,9 +185,8 @@
 <div class="container content-wrapper">
     <div class="form-card">
         <% if (client != null) { %>
-            <div class="form-title text-center">Mise à jour du client : ID <%= client.getIdcli() %></div>
+            <div class="form-title text-center">Mise a jour du client : ID <%= client.getIdcli() %></div>
             
-            <%-- ACTION CORRIGEE VERS SERVLET --%>
             <form action="${pageContext.request.contextPath}/ClientServlet" method="post">
                 <input type="hidden" name="action" value="update">
                 <input type="hidden" name="idcli" value="<%= client.getIdcli() %>">
@@ -176,7 +197,7 @@
                 </div>
 
                 <div class="mb-3">
-                    <label class="form-label">Numéro de téléphone</label>
+                    <label class="form-label">Numero de telephone</label>
                     <input type="tel" name="numtel" class="form-control" value="<%= client.getNumtel() %>" required>
                 </div>
 
@@ -186,7 +207,6 @@
             <div class="alert alert-warning text-center">Client introuvable ou ID invalide.</div>
         <% } %>
 
-        <%-- LIEN RETOUR CORRIGE --%>
         <a href="${pageContext.request.contextPath}/ClientServlet" class="back-action">ANNULER ET RETOURNER A LA LISTE</a>
     </div>
 </div>
@@ -198,7 +218,6 @@
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<%-- CHEMIN JS CORRIGE --%>
 <script src="${pageContext.request.contextPath}/js/scripts.js"></script>
 
 </body>

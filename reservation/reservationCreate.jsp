@@ -3,13 +3,10 @@
 <%
     ClientDAO clientDAO = new ClientDAO();
     VoitureDAO voitureDAO = new VoitureDAO();
-    
     List<Client> clients = clientDAO.getAll();
     List<Voiture> voitures = voitureDAO.getAll();
-    
-    // Récupération des paramètres pour le mode édition/pré-remplissage
     String idvoitParam = request.getParameter("idvoit");
-    String idreservParam = request.getParameter("idreserv"); // Important pour différencier les places
+    String idreservParam = request.getParameter("idreserv"); 
 %>
 <!DOCTYPE html>
 <html lang="fr">
@@ -17,19 +14,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Réservation - Gestion Coopérative</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/App.css">
     <style>
         :root { --primary-color: #1a3a5f; --bg-color: #f8f9fa; --white: #ffffff; --accent: #ffc107; --blue-selected: #0d6efd; --grey-occupied: #e9ecef; }
         body { background-color: var(--bg-color); font-family: 'Segoe UI', sans-serif; min-height: 100vh; display: flex; flex-direction: column; }
         .main-header { background-color: var(--primary-color); color: white; padding: 25px 0; }
         .form-card { background: var(--white); border: 1px solid #dee2e6; border-radius: 4px; padding: 25px; max-width: 700px; margin: 30px auto; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
         .form-label { font-weight: bold; text-transform: uppercase; font-size: 0.75rem; color: var(--primary-color); margin-bottom: 5px; display: block; }
-        .btn-validate { background-color: var(--primary-color); color: white; border: none; padding: 15px; width: 100%; font-weight: bold; text-transform: uppercase; margin-top: 15px; border-radius: 4px; transition: 0.3s; }
+        .btn-validate { background-color: var(--primary-color); color: white; border: none; padding: 15px; width: 100%; font-weight: bold; text-transform: uppercase; margin-top: 15px; border-radius: 4px; transition: 0.3s; cursor: pointer; }
         .btn-validate:hover { background-color: #2a4d7d; transform: translateY(-2px); }
         
         /* GRILLE ET ETATS DES PLACES */
-        .seat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-top: 15px;*/ background: #f1f3f5; padding: 20px; border-radius: 8px; }
+        .seat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-top: 15px; background: #f1f3f5; padding: 20px; border-radius: 8px; }
         .seat { padding: 12px; text-align: center; border-radius: 6px; font-weight: bold; font-size: 0.9rem; transition: 0.2s; min-width: 45px; }
         
         /* BLANCHE : Libre */
@@ -76,7 +73,6 @@
 
             if (idvoit && date) {
                 seatArea.style.display = "block";
-                // URL adaptée pour inclure l'ID de réservation pour le mode modification
                 var url = "${pageContext.request.contextPath}/CheckPlacesServlet?idvoit=" + idvoit + "&date=" + date + "&idreserv=" + idReservCourante;
                 
                 fetch(url)
@@ -84,10 +80,8 @@
                     .then(data => {
                         document.getElementById("seatGridContainer").innerHTML = data;
                         
-                        // Initialiser selectedSeats avec les places déjà bleues (mode modif)
                         const preSelected = document.querySelectorAll('.selected-blue');
                         selectedSeats = Array.from(preSelected).map(s => {
-                            // On extrait le numéro de place via l'appel onclick selectSeat(this, X)
                             const onclickAttr = s.getAttribute('onclick');
                             return parseInt(onclickAttr.match(/\d+/)[0]);
                         });
@@ -104,12 +98,10 @@
         function selectSeat(element, num) {
             const index = selectedSeats.indexOf(num);
             if (index > -1) {
-                // Désélectionner : redevient blanc
                 selectedSeats.splice(index, 1);
                 element.classList.remove('selected-blue');
                 element.classList.add('available-white');
             } else {
-                // Sélectionner : devient bleu plein
                 selectedSeats.push(num);
                 element.classList.remove('available-white');
                 element.classList.add('selected-blue');
@@ -177,7 +169,7 @@
             <% } %>
 
             <div class="mb-4">
-                <label class="form-label"><i class="bi bi-person-fill"></i> Client</label>
+                <label class="form-label"> Client</label>
                 <select name="idcli" class="form-select shadow-sm" required>
                     <option value="">-- Sélectionner le client --</option>
                     <% for (Client c : clients) { %>
@@ -190,7 +182,7 @@
 
             <div class="row">
                 <div class="col-md-6 mb-4">
-                    <label class="form-label"><i class="bi bi-truck"></i> Véhicule</label>
+                    <label class="form-label"> Véhicule</label>
                     <select name="idvoit" id="idvoitSelect" class="form-select shadow-sm" onchange="loadAvailableSeats()" required>
                         <option value="">-- Choisir véhicule --</option>
                         <% for (Voiture v : voitures) { %>
@@ -201,13 +193,13 @@
                     </select>
                 </div>
                 <div class="col-md-6 mb-4">
-                    <label class="form-label"><i class="bi bi-calendar-check"></i> Date du voyage</label>
+                    <label class="form-label"> Date du voyage</label>
                     <input type="date" name="date_voyage" id="dateVoyage" class="form-control shadow-sm" onchange="loadAvailableSeats()" required>
                 </div>
             </div>
 
             <div id="dynamicSeatArea" style="display:none;" class="mb-4">
-                <label class="form-label text-primary"><i class="bi bi-grid-3x3-gap"></i> Plan des places :</label>
+                <label class="form-label text-primary"> Plan des places :</label>
                 <div id="seatGridContainer" class="seat-grid shadow-inner"></div>
                 
                 <div class="d-flex gap-3 mt-2 mb-3 small">
@@ -225,7 +217,7 @@
 
             <div class="row">
                 <div class="col-md-6 mb-3">
-                    <label class="form-label"><i class="bi bi-cash-stack"></i> Type de Paiement</label>
+                    <label class="form-label"> Type de Paiement</label>
                     <select name="payment" id="payment" class="form-select shadow-sm" onchange="toggleAvance()" required>
                         <option value="Sans avance">Sans avance</option>
                         <option value="avec avance">Avec avance</option>
@@ -239,7 +231,7 @@
             </div>
 
             <button type="submit" class="btn-validate shadow">
-                <i class="bi bi-check-circle-fill"></i> <%= (idreservParam != null) ? "METTRE À JOUR" : "CONFIRMER LA RÉSERVATION" %>
+                 <%= (idreservParam != null) ? "METTRE À JOUR" : "CONFIRMER LA RÉSERVATION" %>
             </button>
         </form>
 

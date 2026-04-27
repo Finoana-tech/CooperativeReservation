@@ -12,9 +12,6 @@
     List<Reservation> avecAvanceBrut = (List<Reservation>) request.getAttribute("avecAvance");
     List<Reservation> toutPayeBrut = (List<Reservation>) request.getAttribute("toutPaye");
 
-    // --- FONCTION DE REGROUPEMENT POUR L'AFFICHAGE ---
-    // Cette fonction permet de ne pas répéter le nom du client s'il a plusieurs places
-    // tout en comptant le nombre réel de voyageurs (places).
 %>
 <%! 
     // Structure pour stocker les données groupées
@@ -58,7 +55,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Statistiques - Gestion Cooperative</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/App.css">
     <style>
         :root {
             --primary-color: #1a3a5f;
@@ -102,7 +99,7 @@
             margin-bottom: 30px;
         }
 
-        .table thead {
+        .table-container .table thead th {
             background-color: var(--primary-color);
             color: var(--white);
         }
@@ -135,6 +132,7 @@
             font-size: 0.85rem;
             border-radius: 4px;
             border: none;
+            cursor: pointer;
         }
         .btn-main:hover { color: white; opacity: 0.9; }
 

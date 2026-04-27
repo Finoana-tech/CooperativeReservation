@@ -15,7 +15,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Liste des clients - Gestion Cooperative</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/App.css">
     <style>
         :root {
             --primary-color: #1a3a5f;
@@ -71,7 +71,7 @@
             border-radius: 4px;
         }
 
-        .table thead {
+        .table-container .table thead th {
             background-color: var(--primary-color);
             color: var(--white);
         }
@@ -96,6 +96,7 @@
             color: var(--primary-color);
             margin-right: 5px;
             background: transparent;
+            display: inline-block;
         }
 
         .btn-action:hover {
@@ -136,20 +137,19 @@
 <section class="search-bar-container">
     <div class="container">
         <div class="search-form">
-            <input type="text" id="searchInput" class="search-input" style="font-size:15px;" placeholder="Rechercher un client par son nom ou par son téléphone...">
+            <input type="text" id="searchInput" class="search-input" style="font-size:15px;" placeholder="Rechercher un client par son nom ou par son telephone...">
         </div>
     </div>
 </section>
 
 <div class="container content-wrapper">
     <div class="d-flex justify-content-between mb-4">
-        <%-- CORRECTION DU LIEN ACCUEIL : Utilisation du contexte absolute --%>
         <a href="${pageContext.request.contextPath}/index.jsp" class="btn-main">Retour Accueil</a>
         <a href="client/clientCreate.jsp" class="btn-main">Nouveau Client</a>
     </div>
 
     <div class="table-container">
-        <div class="table-title">Base de données Clients</div>
+        <div class="table-title">Base de donnees Clients</div>
         
         <table class="table table-hover" id="clientTable">
             <thead>
@@ -169,9 +169,8 @@
                     <td>
                         <a href="client/clientUpdate.jsp?id=<%= c.getIdcli() %>" class="btn-action">Modifier</a>
                         
-                        <%-- CORRECTION DE L'APPEL SCRIPT : Utilisation du servlet avec le bon chemin --%>
                         <a href="javascript:void(0);" 
-                           class="btn-action text-danger border-danger" 
+                           class="btn-action border-danger" 
                            onclick="confirmerSuppression('<%= c.getIdcli() %>', '<%= c.getNom() %>', '${pageContext.request.contextPath}/ClientServlet')">
                            Supprimer
                         </a>
@@ -180,7 +179,7 @@
                 <% } %>
                 <% if (clients.isEmpty()) { %>
                 <tr>
-                    <td colspan="4" class="text-center text-muted">Aucun client trouvé.</td>
+                    <td colspan="4" class="text-center text-muted">Aucun client trouve.</td>
                 </tr>
                 <% } %>
             </tbody>
@@ -194,9 +193,7 @@
     </div>
 </footer>
 
-<%-- SCRIPTS --%>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<%-- ADAPTATION DU CHEMIN VERS JS/ --%>
 <script src="${pageContext.request.contextPath}/js/scripts.js"></script>
 
 <script>

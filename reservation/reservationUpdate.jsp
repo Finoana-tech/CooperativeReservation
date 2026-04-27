@@ -8,7 +8,7 @@
     String idreserv = request.getParameter("id");
     Reservation reservation = reservationDAO.getById(idreserv);
     
-    List<Reservation> toutesLesPlaces = reservationDAO. getAllByCodeReserv(idreserv);
+    List<Reservation> toutesLesPlaces = reservationDAO.getAllByCodeReserv(idreserv);
     StringBuilder placesInitiales = new StringBuilder();
     for(int i=0; i<toutesLesPlaces.size(); i++) {
         placesInitiales.append(toutesLesPlaces.get(i).getPlace());
@@ -29,19 +29,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Modifier Réservation - Gestion Coopérative</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/App.css">
     <style>
         :root { --primary-color: #1a3a5f; --bg-color: #f8f9fa; --white: #ffffff; --accent: #ffc107; --blue-selected: #0d6efd; --grey-occupied: #e9ecef; }
         body { background-color: var(--bg-color); font-family: 'Segoe UI', sans-serif; min-height: 100vh; display: flex; flex-direction: column; }
         .main-header { background-color: var(--primary-color); color: white; padding: 25px 0; }
         .form-card { background: var(--white); border: 1px solid #dee2e6; border-radius: 4px; padding: 25px; max-width: 700px; margin: 30px auto; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
         .form-label { font-weight: bold; text-transform: uppercase; font-size: 0.75rem; color: var(--primary-color); margin-bottom: 5px; display: block; }
-        .btn-update { background-color: var(--primary-color); color: white; border: none; padding: 15px; width: 100%; font-weight: bold; text-transform: uppercase; margin-top: 15px; border-radius: 4px; transition: 0.3s; }
+        .btn-update { background-color: var(--primary-color); color: white; border: none; padding: 15px; width: 100%; font-weight: bold; text-transform: uppercase; margin-top: 15px; border-radius: 4px; transition: 0.3s; cursor: pointer; }
         .btn-update:hover { background-color: #2a4d7d; transform: translateY(-2px); }
         .id-badge { background-color: rgba(255,255,255,0.2); color: white; padding: 5px 15px; border-radius: 20px; font-size: 0.8rem; font-weight: bold; border: 1px solid white; display: inline-block; }
         
-        /* GRILLE ET ETATS DES PLACES ADAPTÉS */
+        
         .seat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 15px; background: #f1f3f5; padding: 15px; border-radius: 8px; }
         .seat { padding: 12px; text-align: center; border-radius: 6px; font-weight: bold; font-size: 0.9rem; transition: 0.2s; min-width: 45px; }
         
@@ -91,7 +90,6 @@
 
             if (idvoit && date) {
                 seatArea.style.display = "block";
-                // Appel au Servlet avec l'ID de réservation pour identifier nos propres places en bleu
                 var url = "${pageContext.request.contextPath}/CheckPlacesServlet?idvoit=" + idvoit + "&date=" + date + "&idreserv=" + idreserv;
                 
                 fetch(url)
@@ -99,7 +97,6 @@
                     .then(data => {
                         document.getElementById("seatGridContainer").innerHTML = data;
                         
-                        // Recalculer selectedSeats basé sur ce que le servlet a marqué comme 'selected-blue'
                         const preSelected = document.querySelectorAll('.selected-blue');
                         selectedSeats = Array.from(preSelected).map(s => {
                             const onclickAttr = s.getAttribute('onclick');
@@ -114,12 +111,10 @@
         function selectSeat(element, num) {
             const index = selectedSeats.indexOf(num);
             if (index > -1) {
-                // Décocher : Bleu -> Blanc
                 selectedSeats.splice(index, 1);
                 element.classList.remove('selected-blue');
                 element.classList.add('available-white');
             } else {
-                // Cocher : Blanc -> Bleu
                 selectedSeats.push(num);
                 element.classList.remove('available-white');
                 element.classList.add('selected-blue');
@@ -173,7 +168,7 @@
     <div class="container">
         <h2 class="fw-bold text-uppercase m-0">COOPERATIVE DE TRANSPORT</h2>
         <p class="mb-2">MODIFICATION DE RÉSERVATION</p>
-        <span class="id-badge"><i class="bi bi-hash"></i> RÉF : <%= (idreserv != null) ? idreserv : "NON DÉFINIE" %></span>
+        <span class="id-badge"># RÉF : <%= (idreserv != null) ? idreserv : "NON DÉFINIE" %></span>
     </div>
 </header>
 
@@ -185,7 +180,7 @@
             <input type="hidden" name="idreserv" value="<%= reservation.getIdreserv() %>">
 
             <div class="mb-4">
-                <label class="form-label"><i class="bi bi-person-fill"></i> Client associé</label>
+                <label class="form-label">Client associé</label>
                 <select name="idcli" class="form-select shadow-sm" required>
                     <% for (Client c : clients) { %>
                         <option value="<%= c.getIdcli() %>" <%= (reservation.getIdcli() == c.getIdcli()) ? "selected" : "" %>>
@@ -197,7 +192,7 @@
 
             <div class="row">
                 <div class="col-md-6 mb-4">
-                    <label class="form-label"><i class="bi bi-truck"></i> Véhicule</label>
+                    <label class="form-label">Véhicule</label>
                     <select name="idvoit" id="idvoitSelect" class="form-select shadow-sm" onchange="loadAvailableSeats()" required>
                         <% for (Voiture v : voitures) { %>
                             <option value="<%= v.getIdvoit() %>" <%= (reservation.getIdvoit().equals(v.getIdvoit())) ? "selected" : "" %>>
@@ -207,13 +202,13 @@
                     </select>
                 </div>
                 <div class="col-md-6 mb-4">
-                    <label class="form-label"><i class="bi bi-calendar-event"></i> Date du voyage</label>
+                    <label class="form-label"> Date du voyage</label>
                     <input type="date" name="date_voyage" id="dateVoyage" class="form-control shadow-sm" value="<%= reservation.getDateVoyage() %>" onchange="loadAvailableSeats()" required>
                 </div>
             </div>
 
             <div id="dynamicSeatArea" class="mb-4">
-                <label class="form-label text-primary"><i class="bi bi-grid-3x3-gap"></i> Plan de placement :</label>
+                <label class="form-label text-primary"> Plan de placement :</label>
                 <div id="seatGridContainer" class="seat-grid shadow-inner"></div>
                 
                 <div class="d-flex gap-3 mt-2 mb-3 small">
@@ -231,7 +226,7 @@
 
             <div class="row">
                 <div class="col-md-6 mb-3">
-                    <label class="form-label"><i class="bi bi-cash-stack"></i> Statut Paiement</label>
+                    <label class="form-label"> Statut Paiement</label>
                     <select name="payment" id="payment" class="form-select shadow-sm" onchange="toggleAvance()" required>
                         <option value="Sans avance" <%= reservation.getPayment().equalsIgnoreCase("Sans avance") ? "selected" : "" %>>Sans avance</option>
                         <option value="avec avance" <%= reservation.getPayment().equalsIgnoreCase("avec avance") ? "selected" : "" %>>Avec avance</option>
@@ -245,18 +240,18 @@
             </div>
 
             <button type="submit" class="btn-update shadow">
-                <i class="bi bi-save-fill"></i> ENREGISTRER LES MODIFICATIONS
+                 ENREGISTRER LES MODIFICATIONS
             </button>
         </form>
         <% } else { %>
             <div class="alert alert-danger text-center">
-                <i class="bi bi-exclamation-triangle-fill"></i> Réservation introuvable.
+                 Réservation introuvable.
             </div>
         <% } %>
         
         <div class="text-center mt-4">
             <a href="${pageContext.request.contextPath}/ReservationServlet?action=list" class="text-decoration-none text-muted fw-bold small">
-                <i class="bi bi-arrow-left"></i> ANNULER ET RETOURNER
+                ANNULER ET RETOURNER
             </a>
         </div>
     </div>

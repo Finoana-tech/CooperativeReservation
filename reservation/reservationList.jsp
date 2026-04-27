@@ -42,8 +42,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Journal des Réservations - Gestion Coopérative</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/App.css">
     <style>
         :root { 
             --primary-color: #1a3a5f; 
@@ -101,7 +100,7 @@
             font-size: 1.1rem; 
         }
         
-        .table thead {
+        .table-container .table thead th {
             background-color: var(--primary-color);
             color: var(--white);
         }
@@ -117,6 +116,7 @@
             border-radius: 4px; 
             border: none;
             display: inline-block;
+            cursor: pointer;
         }
         .btn-main:hover { color: white; opacity: 0.9; }
 
@@ -145,6 +145,7 @@
             padding: 2px 6px; 
             border-radius: 3px; 
             margin: 1px;
+            display: inline-block;
         }
 
         footer { 
@@ -199,7 +200,7 @@
                 </thead>
                 <tbody>
                     <% if (groupeMap.isEmpty()) { %>
-                        <tr><td colspan="8" class="text-center py-4 text-muted">Aucune réservation enregistrée.</td></tr>
+                        <tr><td colspan="8" class="text-center py-4 text-muted">Aucune réservation enregistrée.少数</td></tr>
                     <% } %>
                     
                     <% 

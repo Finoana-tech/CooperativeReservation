@@ -8,12 +8,12 @@
         Reservation r = dao.getById(idreserv);
         
         if (r != null) {
-            //  Configuration de la réponse
+            //  Configuration de la reponse
             response.setContentType("application/pdf");
             response.setHeader("Content-Disposition", "attachment; filename=recu_" + idreserv + ".pdf");
 
             try {
-                //  Création du document
+                //  Creation du document
                 Document document = new Document(PageSize.A5);
                 PdfWriter.getInstance(document, response.getOutputStream());
                 document.open();
@@ -24,12 +24,12 @@
                 Font normalFont = new Font(Font.FontFamily.HELVETICA, 10, Font.NORMAL);
                 Font boldFont = new Font(Font.FontFamily.HELVETICA, 10, Font.BOLD);
                 
-                //  En-tête
-                Paragraph title = new Paragraph("COOPÉRATIVE DE TRANSPORT", titleFont);
+                //  En-tete
+                Paragraph title = new Paragraph("COOPERATIVE DE TRANSPORT", titleFont);
                 title.setAlignment(Element.ALIGN_CENTER);
                 document.add(title);
                 
-                Paragraph subtitle = new Paragraph("REÇU DE RÉSERVATION", subtitleFont);
+                Paragraph subtitle = new Paragraph("RECU DE RESERVATION", subtitleFont);
                 subtitle.setAlignment(Element.ALIGN_CENTER);
                 document.add(subtitle);
                 
@@ -39,7 +39,7 @@
                 document.add(new Chunk(ls));
                 document.add(new Paragraph(" "));
 
-                //  Récupération des données liées
+                //  Recuperation des donnees liees
                 Client client = new ClientDAO().getById(r.getIdcli());
                 Voiture voiture = new VoitureDAO().getById(r.getIdvoit());
                 SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.FRENCH);
@@ -50,7 +50,7 @@
                 tableInfo.setWidthPercentage(100);
                 tableInfo.setBorderWidth(0);
 
-                tableInfo.addCell(new PdfPCell(new Phrase("Reçu N° : " + r.getIdreserv(), boldFont)));
+                tableInfo.addCell(new PdfPCell(new Phrase("Recu N° : " + r.getIdreserv(), boldFont)));
                 tableInfo.addCell(new PdfPCell(new Phrase("Date : " + sdfTime.format(r.getDateReserv()), normalFont)));
                 
                 // Supprimer les bordures des cellules de info
@@ -68,7 +68,7 @@
                 tableDetails.setWidthPercentage(100);
                 tableDetails.setSpacingBefore(10f);
 
-                // En-têtes du tableau
+                // En-tetes du tableau
                 PdfPCell h1 = new PdfPCell(new Phrase("DESCRIPTION", boldFont));
                 h1.setBackgroundColor(BaseColor.LIGHT_GRAY);
                 tableDetails.addCell(h1);
@@ -90,12 +90,12 @@
                 int avance = r.getMontantAvance();
                 int reste = total - avance;
 
-                PdfPCell cellAvanceLabel = new PdfPCell(new Phrase("MONTANT PAYÉ (AVANCE)", boldFont));
+                PdfPCell cellAvanceLabel = new PdfPCell(new Phrase("MONTANT PAYE (AVANCE)", boldFont));
                 cellAvanceLabel.setHorizontalAlignment(Element.ALIGN_RIGHT);
                 tableDetails.addCell(cellAvanceLabel);
                 tableDetails.addCell(new Phrase(String.format("%,d", avance), boldFont)).setHorizontalAlignment(Element.ALIGN_RIGHT);
 
-                PdfPCell cellResteLabel = new PdfPCell(new Phrase("RESTE À PAYER", boldFont));
+                PdfPCell cellResteLabel = new PdfPCell(new Phrase("RESTE A PAYER", boldFont));
                 cellResteLabel.setHorizontalAlignment(Element.ALIGN_RIGHT);
                 tableDetails.addCell(cellResteLabel);
                 
@@ -108,7 +108,7 @@
 
                 document.add(new Paragraph(" "));
                 document.add(new Paragraph(" "));
-                Paragraph footer = new Paragraph("BON VOYAGE AVEC NOTRE COOPÉRATIVE !", new Font(Font.FontFamily.HELVETICA, 9, Font.ITALIC));
+                Paragraph footer = new Paragraph("BON VOYAGE AVEC NOTRE COOPERATIVE !", new Font(Font.FontFamily.HELVETICA, 9, Font.ITALIC));
                 footer.setAlignment(Element.ALIGN_CENTER);
                 document.add(footer);
 

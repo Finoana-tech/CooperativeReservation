@@ -18,7 +18,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Modifier Voiture - Gestion Cooperative</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/App.css">
     <style>
         :root {
             --primary-color: #1a3a5f;
@@ -146,7 +146,7 @@
         <form action="${pageContext.request.contextPath}/VoitureServlet" method="GET" class="mx-auto" style="max-width: 600px;">
             <div class="input-group">
                 <input type="text" name="search" class="form-control" placeholder="Rechercher une voiture...">
-                <button type="submit" class="btn btn-dark text-uppercase fw-bold">Rechercher</button>
+                <button type="submit" class="btn-main text-uppercase fw-bold">Rechercher</button>
             </div>
         </form>
     </div>

@@ -11,9 +11,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Consultation des Places - Coopérative</title>
-    
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/App.css">
     
     <style>
         :root {
@@ -87,7 +85,7 @@
         <div class="col-lg-9">
             <div class="card shadow-sm border-0">
                 <div class="card-header bg-white py-3 border-bottom">
-                    <h5 class="mb-0 text-primary"><i class="bi bi-grid-3x3-gap"></i> Visualisation du plan de voyage</h5>
+                    <h5 class="mb-0 text-primary">Visualisation du plan de voyage</h5>
                 </div>
                 <div class="card-body">
                     
@@ -125,7 +123,7 @@
                     <div id="seatGrid" style="display: none;"></div>
 
                     <div id="emptyMessage" class="text-center text-muted py-5">
-                        <i class="bi bi-info-circle fs-1 opacity-25"></i>
+                        <div class="fs-1 opacity-25">📋</div>
                         <p class="mt-2">Veuillez sélectionner les critères pour afficher les places disponibles.</p>
                     </div>
 
@@ -133,7 +131,7 @@
             </div>
             
             <div class="mt-4 text-start">
-                <a href="../index.jsp" class="btn btn-secondary shadow-sm">
+                <a href="../index.jsp" class="btn-secondary shadow-sm">
                      Retour au Menu
                 </a>
             </div>
@@ -156,7 +154,7 @@ function chargerPlaces() {
 
     if (idvoit !== "" && date !== "") {
         msg.style.display = "none";
-        grid.style.display = "flex"; // Utilisation de flex pour l'alignement des boites larges
+        grid.style.display = "flex";
         
         grid.innerHTML = `
             <div class="text-center w-100 py-5">
@@ -164,7 +162,6 @@ function chargerPlaces() {
                 <p class="mt-3 text-muted">Récupération du plan en cours...</p>
             </div>`;
 
-        // Appel vers le Servlet avec échappement pour JSP
         fetch(`../CheckPlacesServlet?idvoit=\${encodeURIComponent(idvoit)}&date=\${encodeURIComponent(date)}`)
             .then(response => {
                 if(!response.ok) throw new Error("Erreur serveur");
@@ -176,12 +173,10 @@ function chargerPlaces() {
                 } else {
                     grid.innerHTML = html;
                     
-                    // Désactivation des clics (Mode Consultation seule)
                     const seats = grid.querySelectorAll('.seat');
                     seats.forEach(s => {
                         s.onclick = null; 
                         s.style.cursor = "default";
-                        s.removeAttribute('title'); // Optionnel: enlever les tooltips
                     });
                 }
             })
