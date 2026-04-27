@@ -185,7 +185,6 @@
                     <td><%= String.format("%,d", v.getFrais()) %> Ar</td>
                     <td>
                         <a href="${pageContext.request.contextPath}/voiture/voitureUpdate.jsp?id=<%= v.getIdvoit() %>" class="btn-action">Modifier</a>
-                        
                         <a href="javascript:void(0);" 
                            onclick="confirmerSuppressionVoiture('<%= v.getIdvoit() %>')" 
                            class="btn-action btn-delete">Supprimer</a>

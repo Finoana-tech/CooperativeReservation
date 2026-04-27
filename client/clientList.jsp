@@ -101,6 +101,10 @@
             display: inline-block;
         }
 
+        .btn-delete {
+            border-color: #333;
+            color:#333;
+        }
         .btn-action:hover {
             background-color: var(--primary-color);
             color: var(--white);

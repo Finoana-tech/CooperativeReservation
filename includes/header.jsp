@@ -1,26 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%-- 
-    Fichier header à inclure dans toutes les pages
-    Variable attendue : currentPage (accueil, voitures, places, clients, reservations, rapports)
---%>
-
-<%-- IMPORT DU CSS DÉDIÉ AU HEADER --%>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/header.css">
 
 <header class="main-header">
     <div class="header-container">
         
-        <!-- LOGO À GAUCHE -->
         <div class="logo-wrapper">
-            <!--<div class="logo-icon">
-                <img src="${pageContext.request.contextPath}/icons/logo.svg" alt="Logo" class="icon" width="28" height="28">
-            </div>-->
             <div class="logo-text">
                 <h1>COOPERATIVE DE TRANSPORT</h1>
             </div>
         </div>
-        
-        <!-- MENU À DROITE -->
         <nav class="nav-bar">
             <ul class="nav-menu">
                 <li class="nav-item">
@@ -78,7 +66,6 @@
 </header>
 
 <script>
-    // Ajuste automatiquement le padding-top en fonction de la hauteur du header
     function adjustHeaderMargin() {
         var header = document.querySelector('.main-header');
         if (header) {
@@ -86,8 +73,6 @@
             document.body.style.paddingTop = headerHeight + 'px';
         }
     }
-    
-    // Exécuter au chargement et au redimensionnement
     window.addEventListener('load', adjustHeaderMargin);
     window.addEventListener('resize', adjustHeaderMargin);
 </script>

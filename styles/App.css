@@ -406,10 +406,6 @@ footer, .main-footer {
     border-width: 4px !important;
 }
 
-.border-danger {
-    border-color: #dc3545 !important;
-}
-
 .bg-white {
     background-color: #ffffff !important;
 }
@@ -616,3 +612,4 @@ footer, .main-footer {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
 }
+
