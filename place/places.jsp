@@ -5,6 +5,9 @@
     VoitureDAO voitDAO = new VoitureDAO();
     List<Voiture> listeVoitures = voitDAO.getAll();
 %>
+<%
+    String currentPage = "places";
+%>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -73,12 +76,8 @@
 </head>
 <body>
 
-<header class="main-header text-center">
-    <div class="container">
-        <h1 class="fw-bold h3 mb-0">COOPERATIVE DE TRANSPORT</h1>
-        <p class="small mb-0 opacity-75">CONSULTATION DES DISPONIBILITÉS</p>
-    </div>
-</header>
+
+<jsp:include page="../includes/header.jsp" />
 
 <div class="container py-5">
     <div class="row justify-content-center">

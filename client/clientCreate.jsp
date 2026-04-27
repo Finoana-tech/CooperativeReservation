@@ -1,4 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<% 
+    String currentPage="clients";
+%>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -168,13 +171,7 @@
 </head>
 <body>
 
-<header class="main-header text-center">
-    <div class="container">
-        <h1>COOPERATIVE DE TRANSPORT</h1>
-        <p>SYSTEME DE GESTION DES RESERVATIONS</p>
-    </div>
-</header>
-
+<jsp:include page="../includes/header.jsp" />
 <section class="search-bar-container">
     <div class="container text-center">
         <a href="${pageContext.request.contextPath}/index.jsp" class="btn-home">Retour a l'accueil</a>

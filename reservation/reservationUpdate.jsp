@@ -22,6 +22,8 @@
     for(Reservation r : toutesLesPlaces) {
         avanceCumulee += r.getMontantAvance();
     }
+
+    String currentPage="reservations";
 %>
 <!DOCTYPE html>
 <html lang="fr">
@@ -164,13 +166,7 @@
 </head>
 <body>
 
-<header class="main-header text-center shadow-sm">
-    <div class="container">
-        <h2 class="fw-bold text-uppercase m-0">COOPERATIVE DE TRANSPORT</h2>
-        <p class="mb-2">MODIFICATION DE RÉSERVATION</p>
-        <span class="id-badge"># RÉF : <%= (idreserv != null) ? idreserv : "NON DÉFINIE" %></span>
-    </div>
-</header>
+<jsp:include page="../includes/header.jsp" />
 
 <div class="container">
     <div class="form-card">

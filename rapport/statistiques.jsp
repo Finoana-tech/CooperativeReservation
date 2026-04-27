@@ -39,6 +39,8 @@
         }
         return map;
     }
+
+    String currentPage="rapports";
 %>
 <%
     Map<String, GroupedRes> mapSansAvance = regrouper(sansAvanceBrut);
@@ -171,13 +173,7 @@
 </head>
 <body>
 
-<header class="main-header text-center">
-    <div class="container">
-        <h1>COOPERATIVE DE TRANSPORT</h1>
-        <p>STATISTIQUES ET ETATS DE PAIEMENT</p>
-    </div>
-</header>
-
+<jsp:include page="../includes/header.jsp" />
 <section class="stat-bar-container">
     <div class="container d-flex justify-content-between align-items-center">
         <div class="recette-box shadow-sm">

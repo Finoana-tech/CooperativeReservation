@@ -1,4 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%-- Définir la page courante pour le header --%>
+<%
+    String currentPage = "accueil";
+%>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -7,138 +11,107 @@
     <title>Accueil - Gestion Cooperative</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/App.css">
     <style>
-        :root {
-            --primary-color: #1a3a5f;
-            --bg-color: #f8f9fa;
-            --white: #ffffff;
-            --text-dark: #333333;
-            --accent-color: #ffc107;
-        }
-
-        body { 
-            background-color: var(--bg-color);
-            font-family: 'Segoe UI', Arial, sans-serif;
-            color: var(--text-dark);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-
-        /* Header */
-        .main-header {
-            background-color: var(--primary-color);
-            color: var(--white);
-            padding: 40px 0;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        }
-
-        /* Cartes Menu */
-        .menu-card {
-            background-color: var(--white);
-            border: 1px solid #dee2e6;
-            border-radius: 8px;
+        /* Styles spécifiques à cette page */
+        .welcome-message {
             text-align: center;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            color: var(--primary-color);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            height: 200px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            margin-bottom: 40px;
         }
-
-        .menu-card:hover {
-            border-color: var(--primary-color);
-            background-color: var(--primary-color);
-            color: var(--white) !important;
-            transform: translateY(-8px);
-            box-shadow: 0 10px 20px rgba(26, 58, 95, 0.2);
+        
+        .welcome-message h2 {
+            color: var(--primary-color, #1a3a5f);
+            font-size: 1.8rem;
+            margin-bottom: 10px;
         }
-
-        .menu-card h3 {
-            font-size: 1.5rem;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin: 0;
-        }
-
-        .menu-card span {
-            font-size: 0.9rem;
-            margin-top: 10px;
-            opacity: 0.7;
-        }
-
-        /* Style spécial pour le bouton d'action rapide (Places) */
-        .card-highlight {
-            border: 2px dashed var(--primary-color);
-            background-color: #fffdf5;
-        }
-
-        footer {
-            padding: 25px 0;
-            border-top: 1px solid #dee2e6;
-            font-size: 0.85rem;
+        
+        .welcome-message p {
             color: #6c757d;
-            background-color: var(--white);
-            margin-top: auto;
+            font-size: 1rem;
         }
+        
+        .custom-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
     </style>
 </head>
 <body>
 
-<header class="main-header text-center">
-    <div class="container">
-        <h1 class="fw-bold">COOPERATIVE DE TRANSPORT</h1>
-        <p class="lead mb-0">SYSTÈME DE GESTION DES RÉSERVATIONS</p>
-    </div>
-</header>
+<!-- Inclusion du header -->
+<jsp:include page="/includes/header.jsp" />
 
-<div class="container my-auto py-5">
-    <div class="row g-4 justify-content-center">
+<!-- Contenu principal -->
+<div class="content-wrapper">
+    <div class="custom-container">
         
-        <div class="col-md-6 col-lg-3">
-            <a href="VoitureServlet" class="menu-card">
-                <h3>Voitures</h3>
-                <span>Choix de type</span>
-            </a>
+        <div class="welcome-message">
+            <h2>Bienvenue dans votre espace de gestion</h2>
+            <p>Sélectionnez un module pour commencer</p>
         </div>
-
-        <div class="col-md-6 col-lg-3">
-            <a href="place/places.jsp" class="menu-card">
-                <h3>Places</h3>
-                <span>Disponibilités & Plan</span>
-            </a>
-        </div>
-
-        <div class="col-md-6 col-lg-3">
-            <a href="ClientServlet" class="menu-card">
-                <h3>Clients</h3>
-                <span>Répertoire</span>
-            </a>
-        </div>
-
-        <div class="col-md-6 col-lg-3">
-            <a href="ReservationServlet?action=list" class="menu-card">
-                <h3>Réservations</h3>
-                <span>Billetterie</span>
-            </a>
-        </div>
+        
+        <div class="row g-4 justify-content-center">
             
-        <div class="col-md-6 col-lg-3">
-    <a href="${pageContext.request.contextPath}/StatistiqueServlet" class="menu-card">
-        <h3>Rapports</h3>
-        <span>Recettes & Stats</span>
-    </a>
-</div>
+            <div class="col-md-6 col-lg-3">
+                <a href="VoitureServlet" class="menu-card">
+                    <div class="menu-icon">
+                        <img src="${pageContext.request.contextPath}/icons/voiture_management.svg" alt="voiture" class="icon">
+                    </div>
+                    <h3>Voitures</h3>
+                    <span>Gestion du parc automobile</span>
+                </a>
+            </div>
 
+            <div class="col-md-6 col-lg-3">
+                <a href="place/places.jsp" class="menu-card">
+                    <div class="menu-icon">
+                        <img src="${pageContext.request.contextPath}/icons/place_management.svg" alt="place" class="icon">
+                    </div>
+                    <h3>Places</h3>
+                    <span>Disponibilités & Plan</span>
+                </a>
+            </div>
+
+            <div class="col-md-6 col-lg-3">
+                <a href="ClientServlet" class="menu-card">
+                    <div class="menu-icon">
+                        <img src="${pageContext.request.contextPath}/icons/client_management.svg" alt="client" class="icon">
+                    </div>
+                    <h3>Clients</h3>
+                    <span>Répertoire complet</span>
+                </a>
+            </div>
+
+            <div class="col-md-6 col-lg-3">
+                <a href="ReservationServlet?action=list" class="menu-card">
+                    <div class="menu-icon">
+                        <img src="${pageContext.request.contextPath}/icons/reservation_management.svg" alt="réservation" class="icon">
+                    </div>
+                    <h3>Réservations</h3>
+                    <span>Billetterie & suivi</span>
+                </a>
+            </div>
+                
+            <div class="col-md-6 col-lg-3">
+                <a href="${pageContext.request.contextPath}/StatistiqueServlet" class="menu-card">
+                    <div class="menu-icon">
+                        <img src="${pageContext.request.contextPath}/icons/stat_management.svg" alt="statistiques" 
+                             class="icon"  >
+                    </div>
+                    <h3>Rapports</h3>
+                    <span>Recettes & Statistiques</span>
+                </a>
+            </div>
+
+        </div>
     </div>
 </div>
 
-<footer class="text-center">
-    <div class="container">
-        <strong>GESTION DE RÉSERVATION DES PLACES DE COOPERATIVE</strong>
+<!-- Footer -->
+<footer class="main-footer">
+    <div class="header-container">
+        <p>&copy; 2026 COOPERATIVE DE TRANSPORT - Tous droits réservés</p>
+        <p style="font-size: 0.75rem; margin-top: 5px;">Système de gestion des réservations de places</p>
     </div>
 </footer>
 

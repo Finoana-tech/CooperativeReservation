@@ -35,6 +35,8 @@
 
     ClientDAO clientDAO = new ClientDAO();
     VoitureDAO voitureDAO = new VoitureDAO();
+
+    String currentPage ="reservations";
 %>
 <!DOCTYPE html>
 <html lang="fr">
@@ -159,21 +161,7 @@
 </head>
 <body>
 
-<header class="main-header text-center">
-    <div class="container">
-        <h1>COOPERATIVE DE TRANSPORT</h1>
-        <p>JOURNAL DES RÉSERVATIONS EFFECTUÉES</p>
-    </div>
-</header>
-
-<section class="stat-bar-container">
-    <div class="container">
-        <div class="recette-box shadow-sm">
-            <span class="text-muted small d-block text-uppercase">Recette totale accumulée</span>
-            <strong class="fs-4" style="color: #198754;"><%= String.format("%,d", recetteTotale) %> Ar</strong>
-        </div>
-    </div>
-</section>
+<jsp:include page="../includes/header.jsp" />
 
 <div class="container content-wrapper">
     <div class="d-flex justify-content-between mb-4">

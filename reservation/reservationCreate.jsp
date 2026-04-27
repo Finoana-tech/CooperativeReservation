@@ -6,7 +6,8 @@
     List<Client> clients = clientDAO.getAll();
     List<Voiture> voitures = voitureDAO.getAll();
     String idvoitParam = request.getParameter("idvoit");
-    String idreservParam = request.getParameter("idreserv"); 
+    String idreservParam = request.getParameter("idreserv");
+    String currentPage = "places"; 
 %>
 <!DOCTYPE html>
 <html lang="fr">
@@ -153,12 +154,7 @@
 </head>
 <body>
 
-<header class="main-header text-center shadow-sm">
-    <div class="container">
-        <h2 class="fw-bold text-uppercase m-0">COOPERATIVE DE TRANSPORT</h2>
-        <small>PORTAIL DE RÉSERVATION</small>
-    </div>
-</header>
+<jsp:include page="../includes/header.jsp" />
 
 <div class="container">
     <div class="form-card">
