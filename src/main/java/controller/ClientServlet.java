@@ -71,7 +71,6 @@ public class ClientServlet extends HttpServlet {
             message = "Erreur lors de l'operation";
         }
 
-        // Redirection vers le doGet pour rafraîchir la liste avec le message
         response.sendRedirect("ClientServlet?msg=" + message);
     }
 }

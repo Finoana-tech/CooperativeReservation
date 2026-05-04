@@ -253,8 +253,11 @@
     </div>
 </div>
 
-<footer class="text-center">
-    <div class="container"><strong>GESTION COOPÉRATIVE TRANSPORT &copy; 2026</strong></div>
+<footer class="main-footer">
+    <div class="header-container">
+        <p>&copy; 2026 COOPERATIVE DE TRANSPORT - Tous droits réservés</p>
+        <p style="font-size: 0.75rem; margin-top: 5px;">Système de gestion des réservations de places</p>
+    </div>
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

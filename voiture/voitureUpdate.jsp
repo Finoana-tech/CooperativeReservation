@@ -36,19 +36,13 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+            
         }
 
         .main-header {
             background-color: var(--primary-color);
             color: var(--white);
             padding: 30px 0;
-        }
-
-        .search-bar-container {
-            background-color: #e9ecef;
-            padding: 20px 0;
-            border-bottom: 1px solid #dee2e6;
-            margin-bottom: 30px;
         }
 
         .btn-home {
@@ -138,19 +132,6 @@
     <jsp:include page="../includes/header.jsp" />
 </header>
 
-<section class="search-bar-container">
-    <div class="container text-center">
-        <a href="${pageContext.request.contextPath}/index.jsp" class="btn-home">Retour à l'accueil</a>
-        
-        <form action="${pageContext.request.contextPath}/VoitureServlet" method="GET" class="mx-auto" style="max-width: 600px;">
-            <div class="input-group">
-                <input type="text" name="search" class="form-control" placeholder="Rechercher une voiture...">
-                <button type="submit" class="btn-main text-uppercase fw-bold">Rechercher</button>
-            </div>
-        </form>
-    </div>
-</section>
-
 <div class="container content-wrapper">
     <div class="form-card">
         <div class="form-title text-center">Modification du véhicule : <%= voiture.getIdvoit() %></div>
@@ -193,9 +174,10 @@
     </div>
 </div>
 
-<footer class="text-center">
-    <div class="container">
-        GESTION DE RESERVATION DES PLACES DE COOPERATIVE
+<footer class="main-footer">
+    <div class="header-container">
+        <p>&copy; 2026 COOPERATIVE DE TRANSPORT - Tous droits réservés</p>
+        <p style="font-size: 0.75rem; margin-top: 5px;">Système de gestion des réservations de places</p>
     </div>
 </footer>
 

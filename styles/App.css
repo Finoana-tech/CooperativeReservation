@@ -1,6 +1,4 @@
-/* ========================================
-   STRUCTURE PRINCIPALE
-   ======================================== */
+/* STRUCTURE PRINCIPALE */
 
 /* Structure principale */
 html, body {
@@ -46,9 +44,8 @@ footer, .main-footer {
     padding-right: 12px;
 }
 
-/* ========================================
-   CARTES MENU AMÉLIORÉES
-   ======================================== */
+/*
+   CARTES MENU AMÉLIORÉES */
 
 .menu-card {
     background-color: var(--white, #ffffff);
@@ -137,9 +134,7 @@ footer, .main-footer {
     }
 }
 
-/* ========================================
-   STYLES BOOTSTRAP MAISON
-   ======================================== */
+/* STYLES BOOTSTRAP MAISON */
 
 /* Système de grille (Grid) */
 .row {
@@ -216,9 +211,7 @@ footer, .main-footer {
     padding-bottom: 48px;
 }
 
-/* ========================================
-   VoitureList.jsp - Tableau
-   ======================================== */
+/* VoitureList.jsp - Tableau */
 
 .table {
     width: 100%;
@@ -251,9 +244,7 @@ footer, .main-footer {
     background-color: transparent;
 }
 
-/* ========================================
-   VoitureCreate.jsp - Formulaires
-   ======================================== */
+/* VoitureCreate.jsp - Formulaires */
 
 .input-group {
     display: flex;
@@ -346,9 +337,7 @@ footer, .main-footer {
     margin-right: auto;
 }
 
-/* ========================================
-   places.jsp - Cartes et Alertes
-   ======================================== */
+/* places.jsp - Cartes et Alertes */
 
 .card {
     position: relative;

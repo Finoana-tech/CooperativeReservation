@@ -173,7 +173,6 @@
 
 <section class="search-bar-container">
     <div class="container text-center">
-        <a href="${pageContext.request.contextPath}/index.jsp" class="btn-home">Retour a l'accueil</a>
         
         <div style="max-width: 800px; margin: 0 auto;">
             <div class="search-input-static">Recherche desactivee pendant la modification...</div>
@@ -210,9 +209,10 @@
     </div>
 </div>
 
-<footer class="text-center">
-    <div class="container">
-        GESTION DE RESERVATION DES PLACES DE COOPERATIVE
+<footer class="main-footer">
+    <div class="header-container">
+        <p>&copy; 2026 COOPERATIVE DE TRANSPORT - Tous droits réservés</p>
+        <p style="font-size: 0.75rem; margin-top: 5px;">Système de gestion des réservations de places</p>
     </div>
 </footer>
 

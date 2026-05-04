@@ -23,32 +23,25 @@ public class StatistiqueServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        // 1. Toujours charger la liste des voitures pour le menu déroulant de recherche
+        // Toujours charger la liste des voitures pour le menu déroulant de recherche
         List<Voiture> listeVoitures = voitDAO.getAll();
         request.setAttribute("listeVoitures", listeVoitures);
 
-        // 2. Récupérer la recette totale (exigence du projet)
+        //  Récupérer la recette totale 
         int recetteTotale = resDAO.getRecetteTotale();
         request.setAttribute("recetteTotale", recetteTotale);
 
-        // 3. Gestion de la recherche des voyageurs par statut
+        //  Gestion de la recherche des voyageurs par statut
         String idvoit = request.getParameter("idvoit");
 
         if (idvoit != null && !idvoit.isEmpty()) {
-            // On récupère les 3 listes demandées par le sujet
-            // Note : Ici on suppose que getVoyageursParStatut renvoie des objets
-            // Reservation
             List<Reservation> sansAvance = resDAO.getVoyageursParStatut(idvoit, "sans avance");
             List<Reservation> avecAvance = resDAO.getVoyageursParStatut(idvoit, "avec avance");
             List<Reservation> toutPaye = resDAO.getVoyageursParStatut(idvoit, "tout payé");
 
-            // --- ADAPTATION POUR LE CALCUL RÉEL DES VOYAGEURS ---
-            // On ne compte plus .size() (le nombre de lignes groupées)
-            // Mais on compte le nombre total de places occupées dans chaque catégorie
-
             int nbVoyageursSansAvance = 0;
             for (Reservation r : sansAvance)
-                nbVoyageursSansAvance += 1; // Ou r.getNombrePlaces() si groupé en SQL
+                nbVoyageursSansAvance += 1; 
 
             int nbVoyageursAvecAvance = 0;
             for (Reservation r : avecAvance)
@@ -57,29 +50,17 @@ public class StatistiqueServlet extends HttpServlet {
             int nbVoyageursToutPaye = 0;
             for (Reservation r : toutPaye)
                 nbVoyageursToutPaye += 1;
-
-            // On envoie les listes à la JSP
             request.setAttribute("sansAvance", sansAvance);
             request.setAttribute("avecAvance", avecAvance);
             request.setAttribute("toutPaye", toutPaye);
-
-            // On envoie les comptes ADAPTÉS (Nombre réel de voyageurs/places)
-            // Si vos listes DAO sont déjà groupées, il faudra sommer les places.
-            // Si elles ne sont pas groupées, .size() est correct pour le nombre de
-            // voyageurs.
             request.setAttribute("nbSansAvance", sansAvance.size());
             request.setAttribute("nbAvecAvance", avecAvance.size());
             request.setAttribute("nbToutPaye", toutPaye.size());
-
-            // AJOUT : On récupère les infos de la voiture pour avoir le 'frais' dans la JSP
+            
             Voiture voitureSelectionnee = voitDAO.getById(idvoit);
             request.setAttribute("voitureDetails", voitureSelectionnee);
-
-            // Garder la voiture sélectionnée en mémoire pour l'affichage
             request.setAttribute("selectedVoit", idvoit);
         }
-
-        // Redirection vers la page des statistiques
         request.getRequestDispatcher("rapport/statistiques.jsp").forward(request, response);
     }
 

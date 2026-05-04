@@ -2,7 +2,6 @@
 <%@ page errorPage="error.jsp" %>
 <%@ page import="java.util.*, model.Voiture, dao.VoitureDAO"%>
 <%
-    // On récupère la liste soit depuis le Servlet, soit directement via la DAO
     List<Voiture> voitures = (List<Voiture>) request.getAttribute("voitures");
     if (voitures == null) {
         VoitureDAO voitureDAO = new VoitureDAO();
@@ -39,24 +38,6 @@
             background-color: var(--primary-color);
             color: var(--white);
             padding: 30px 0;
-        }
-
-        .search-bar-container {
-            background-color: #e9ecef;
-            padding: 20px 0;
-            border-bottom: 1px solid #dee2e6;
-            margin-bottom: 30px;
-        }
-
-        .search-input {
-            border: 1px solid #ced4da;
-            border-radius: 4px;
-            padding: 12px 15px;
-            width: 100%;
-            max-width: 800px;
-            display: block;
-            margin: 0 auto;
-            box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
         }
 
         .content-wrapper {
@@ -148,20 +129,13 @@
     <jsp:include page="../includes/header.jsp" />
 </header>
 
-<section class="search-bar-container">
-    <div class="container">
-        <input type="text" id="searchInput" class="search-input" placeholder="Filtrer par ID, Modèle, Type...">
-    </div>
-</section>
-
 <div class="container content-wrapper">
     <div class="nav-actions">
-        <a href="${pageContext.request.contextPath}/index.jsp" class="btn-main">Retour Accueil</a>
         <a href="${pageContext.request.contextPath}/voiture/voitureCreate.jsp" class="btn-main">Ajouter une voiture</a>
     </div>
 
     <div class="table-container">
-        <div class="table-title">Liste du parc automobile</div>
+        <div class="table-title">Liste des voitures</div>
         
         <table class="table table-hover" id="voitureTable">
             <thead>
@@ -196,9 +170,10 @@
     </div>
 </div>
 
-<footer class="text-center">
-    <div class="container">
-        GESTION DE RESERVATION DES PLACES DE COOPERATIVE
+<footer class="main-footer">
+    <div class="header-container">
+        <p>&copy; 2026 COOPERATIVE DE TRANSPORT - Tous droits réservés</p>
+        <p style="font-size: 0.75rem; margin-top: 5px;">Système de gestion des réservations de places</p>
     </div>
 </footer>
 

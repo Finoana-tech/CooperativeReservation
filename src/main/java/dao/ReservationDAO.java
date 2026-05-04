@@ -260,7 +260,7 @@ public class ReservationDAO {
         return 0;
     }
 
-    // on gère les places our chaque voiture
+    // on gère les places pour chaque voiture
     private void occuperPlaceTransactionnel(Connection conn, String idvoit, int place) throws SQLException {
         updateStatus(conn, idvoit, place, "oui");
     }

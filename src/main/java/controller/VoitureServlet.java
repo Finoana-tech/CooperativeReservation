@@ -19,7 +19,7 @@ public class VoitureServlet extends HttpServlet {
         String action = request.getParameter("action");
         String search = request.getParameter("search");
 
-        // 1. Logique de Suppression
+        // Logique de Suppression
         if ("delete".equals(action)) {
             // On récupère 'id' car c'est ce que notre fonction JS envoie dans l'URL
             String idvoit = request.getParameter("id");
@@ -34,7 +34,7 @@ public class VoitureServlet extends HttpServlet {
             return;
         }
 
-        // 2. Logique d'affichage et de recherche
+        // Logique d'affichage
         List<Voiture> liste;
         if (search != null && !search.trim().isEmpty()) {
             liste = voitDAO.rechercher(search);

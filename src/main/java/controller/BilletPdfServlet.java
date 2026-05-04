@@ -39,24 +39,19 @@ public class BilletPdfServlet extends HttpServlet {
         Reservation res = resDAO.getById(idreserv);
 
         if (res != null) {
-            // Récupération des informations du client et de la voiture
             ClientDAO clientDAO = new ClientDAO();
             VoitureDAO voitureDAO = new VoitureDAO();
             Client client = clientDAO.getById(res.getIdcli());
             Voiture voiture = voitureDAO.getById(res.getIdvoit());
 
-            // Récupération de TOUTES les places réservées par ce client pour ce véhicule à
-            // cette date
             List<Reservation> toutesLesPlaces = resDAO.getPlacesByClientAndVoitureAndDate(
                     res.getIdcli(),
                     res.getIdvoit(),
                     res.getDateVoyage());
 
-            // Paramétrage du type de contenu
             response.setContentType("application/pdf");
             response.setHeader("Content-Disposition", "inline; filename=Recu_" + idreserv + ".pdf");
 
-            // Format A6 pour un reçu compact (comme un ticket)
             Document document = new Document(PageSize.A6, 25, 25, 25, 25);
 
             try {
@@ -70,7 +65,7 @@ public class BilletPdfServlet extends HttpServlet {
                 Font smallFont = new Font(Font.FontFamily.HELVETICA, 9, Font.NORMAL);
                 Font footerFont = new Font(Font.FontFamily.HELVETICA, 8, Font.ITALIC);
 
-                // ===== EN-TÊTE =====
+                // EN-TÊTE
                 Paragraph title = new Paragraph("COOPÉRATIVE DE TRANSPORT", titleFont);
                 title.setAlignment(Element.ALIGN_CENTER);
                 document.add(title);
@@ -79,24 +74,16 @@ public class BilletPdfServlet extends HttpServlet {
                 subtitle.setAlignment(Element.ALIGN_CENTER);
                 document.add(subtitle);
 
-                // document.add(new Paragraph(" ")); // Espacement
-
-                // Ligne de séparation
                 document.add(new Paragraph("───────────────────────────────", normalFont));
 
-                // ===== INFORMATIONS PRINCIPALES =====
-                // document.add(new Paragraph(" "));
                 document.add(new Paragraph("Reçu N° : " + res.getIdreserv(), boldFont));
-                // document.add(new Paragraph(" "));
 
                 document.add(new Paragraph("Date de réservation : " + res.getDateReserv(), normalFont));
                 document.add(new Paragraph("Date du voyage      : " + res.getDateVoyage(), normalFont));
 
-                // document.add(new Paragraph(" "));
                 document.add(new Paragraph("───────────────────────────────", normalFont));
-                // document.add(new Paragraph(" "));
 
-                // ===== INFORMATIONS CLIENT =====
+                // INFORMATIONS CLIENT
                 if (client != null) {
                     document.add(new Paragraph("Nom du Client : " + client.getNom(), boldFont));
                     document.add(new Paragraph("Contact       : " + client.getNumtel(), normalFont));
@@ -104,11 +91,9 @@ public class BilletPdfServlet extends HttpServlet {
                     document.add(new Paragraph("Client ID : " + res.getIdcli(), normalFont));
                 }
 
-                // document.add(new Paragraph(" "));
                 document.add(new Paragraph("───────────────────────────────", normalFont));
-                // document.add(new Paragraph(" "));
 
-                // ===== INFORMATIONS VOITURE ET PLACES =====
+                // INFORMATIONS VOITURE ET PLACES
                 if (voiture != null) {
                     document.add(new Paragraph("Voiture N° : " + voiture.getIdvoit(), boldFont));
                     document.add(new Paragraph("Type       : " + voiture.getType(), normalFont));
@@ -133,14 +118,11 @@ public class BilletPdfServlet extends HttpServlet {
 
                 document.add(new Paragraph(" "));
                 document.add(new Paragraph("───────────────────────────────", normalFont));
-                // document.add(new Paragraph(" "));
 
-                // ===== INFORMATIONS PAIEMENT =====
                 if (voiture != null) {
-                    document.add(new Paragraph("Frais : " + voiture.getFrais() + " Ar", boldFont));
+                    document.add(new Paragraph("Frais : " + voiture.getFrais() + " Ar/place", boldFont));
                 }
 
-                // Traduction du statut de paiement pour affichage
                 String statutPaiement = res.getPayment();
                 String statutAffichage = statutPaiement;
                 if ("sans avance".equalsIgnoreCase(statutPaiement)) {
@@ -171,14 +153,12 @@ public class BilletPdfServlet extends HttpServlet {
 
                 document.add(new Paragraph(" "));
                 document.add(new Paragraph("───────────────────────────────", normalFont));
-                // document.add(new Paragraph(" "));
 
-                // ===== PIED DE PAGE =====
                 Paragraph remerciement = new Paragraph("Merci de votre confiance !", normalFont);
                 remerciement.setAlignment(Element.ALIGN_CENTER);
                 document.add(remerciement);
 
-                Paragraph bonVoyage = new Paragraph("✨ Bon voyage avec notre coopérative ! ✨", footerFont);
+                Paragraph bonVoyage = new Paragraph(" Bon voyage avec notre coopérative ! ", footerFont);
                 bonVoyage.setAlignment(Element.ALIGN_CENTER);
                 document.add(bonVoyage);
 

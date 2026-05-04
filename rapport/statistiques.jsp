@@ -198,9 +198,6 @@
 </section>
 
 <div class="container content-wrapper">
-    <div class="nav-actions">
-        <a href="<%= request.getContextPath() %>/index.jsp" class="btn-main">Retour Accueil</a>
-    </div>
 
     <% if (selectedVoit != null) { %>
         
@@ -314,9 +311,10 @@
     <% } %>
 </div>
 
-<footer class="text-center">
-    <div class="container">
-        GESTION DE RESERVATION DES PLACES DE COOPERATIVE - MODULE STATISTIQUES
+<footer class="main-footer">
+    <div class="header-container">
+        <p>&copy; 2026 COOPERATIVE DE TRANSPORT - Tous droits réservés</p>
+        <p style="font-size: 0.75rem; margin-top: 5px;">Système de gestion des réservations de places</p>
     </div>
 </footer>
 

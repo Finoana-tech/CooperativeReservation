@@ -174,7 +174,6 @@
 <jsp:include page="../includes/header.jsp" />
 <section class="search-bar-container">
     <div class="container text-center">
-        <a href="${pageContext.request.contextPath}/index.jsp" class="btn-home">Retour a l'accueil</a>
         
         <form action="${pageContext.request.contextPath}/ClientServlet" method="GET" class="search-form">
             <input type="text" name="search" class="search-input" placeholder="Rechercher un client par son nom ou numero de telephone...">
@@ -207,9 +206,10 @@
     </div>
 </div>
 
-<footer class="text-center">
-    <div class="container">
-        GESTION DE RESERVATION DES PLACES DE COOPERATIVE
+<footer class="main-footer">
+    <div class="header-container">
+        <p>&copy; 2026 COOPERATIVE DE TRANSPORT - Tous droits réservés</p>
+        <p style="font-size: 0.75rem; margin-top: 5px;">Système de gestion des réservations de places</p>
     </div>
 </footer>
 

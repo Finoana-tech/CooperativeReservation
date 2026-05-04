@@ -4,26 +4,19 @@ import java.sql.Date;
 import java.sql.Timestamp;
 
 public class Reservation {
-    // 1. Identifiants
-    private int id; // Clé primaire technique (auto-increment)
-    private String idreserv; // Code de réservation (ex: RS001) - Identifiant métier
-
-    // 2. Relations
+    private int id; 
+    private String idreserv; 
     private String idvoit;
     private int idcli;
 
-    // 3. Détails du voyage
+    
     private int place;
     private Timestamp dateReserv;
     private Date dateVoyage;
-
-    // 4. Paiement
     private String payment;
     private int montantAvance;
-
-    // 5. Attributs calculés (Pour les exigences du PDF : Reste à payer, Recette)
-    private int fraisFixe; // Frais par place (vient de la table voiture)
-    private String nomClient; // Pour faciliter l'affichage dans la liste et le reçu
+    private int fraisFixe;
+    private String nomClient;
     private String numTelClient;
 
     public Reservation() {
