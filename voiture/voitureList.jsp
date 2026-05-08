@@ -43,6 +43,7 @@
         .content-wrapper {
             flex: 1;
             margin-bottom: 40px;
+             padding-top:80px;
         }
 
         .table-container {

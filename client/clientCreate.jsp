@@ -32,43 +32,10 @@
             padding: 30px 0;
         }
 
-        .search-bar-container {
-            background-color: #e9ecef;
-            padding: 20px 0;
-            border-bottom: 1px solid #dee2e6;
-            margin-bottom: 30px;
-        }
-
-        .search-form {
-            max-width: 800px;
-            margin: 0 auto;
-            display: flex;
-            gap: 10px;
-        }
-
-        .search-input {
-            border: 1px solid #ced4da;
-            border-radius: 4px;
-            padding: 10px 15px;
-            flex-grow: 1;
-        }
-
-        .btn-search {
-            background-color: var(--primary-color);
-            color: var(--white);
-            border: none;
-            padding: 10px 25px;
-            border-radius: 4px;
-            text-transform: uppercase;
-            font-weight: bold;
-            cursor: pointer;
-        }
-        .btn-search:hover {
-            opacity: 0.9;
-        }
 
         .content-wrapper {
             flex: 1;
+            padding-top:70px;
         }
 
         .form-card {
@@ -78,6 +45,7 @@
             padding: 30px;
             max-width: 600px;
             margin: 0 auto 40px auto;
+            /*padding-top: 80px;*/
         }
 
         .form-title {
@@ -172,15 +140,6 @@
 <body>
 
 <jsp:include page="../includes/header.jsp" />
-<section class="search-bar-container">
-    <div class="container text-center">
-        
-        <form action="${pageContext.request.contextPath}/ClientServlet" method="GET" class="search-form">
-            <input type="text" name="search" class="search-input" placeholder="Rechercher un client par son nom ou numero de telephone...">
-            <button type="submit" class="btn-search">Rechercher</button>
-        </form>
-    </div>
-</section>
 
 <div class="container content-wrapper">
     <div class="form-card">

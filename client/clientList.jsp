@@ -46,6 +46,7 @@
             padding: 20px 0;
             border-bottom: 1px solid #dee2e6;
             margin-bottom: 30px;
+            padding-top: 80px;
         }
 
         .search-form {

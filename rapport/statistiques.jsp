@@ -90,6 +90,7 @@
 
         .content-wrapper {
             flex: 1;
+             padding-top:70px;
             margin-bottom: 40px;
         }
 

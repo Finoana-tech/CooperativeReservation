@@ -8,7 +8,6 @@ import java.util.*;
 
 public class PlaceDAO {
 
-    // --- GÉNÉRATION AUTOMATIQUE (Appelé lors de la création d'une voiture)
     public boolean genererPlaces(Voiture voiture) {
         String sql = "INSERT INTO place (idvoit, place, occupation, nom_place) VALUES (?, ?, 'non', ?)";
         try (Connection conn = DatabaseConnection.getConnection();

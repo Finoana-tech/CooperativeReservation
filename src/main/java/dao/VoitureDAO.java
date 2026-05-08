@@ -70,7 +70,7 @@ public class VoitureDAO {
 
                 pstmt.setString(1, idvoit);
                 pstmt.setInt(2, i);
-                pstmt.setString(3, nomGenere); // On insère le nom calculé
+                pstmt.setString(3, nomGenere);
                 pstmt.addBatch();
             }
             pstmt.executeBatch();
@@ -95,8 +95,6 @@ public class VoitureDAO {
             return "Premium - Banc " + rang;
         return "Banc " + rang;
     }
-
-    // --- LE RESTE RESTE IDENTIQUE MAIS OPTIMISÉ ---
 
     public boolean modifier(Voiture v) {
         String sql = "UPDATE voiture SET Design=?, type=?, nbrplace=?, frais=? WHERE idvoit=?";

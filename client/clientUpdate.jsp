@@ -79,6 +79,7 @@
 
         .content-wrapper {
             flex: 1;
+            padding-top:70px;
         }
 
         .form-card {

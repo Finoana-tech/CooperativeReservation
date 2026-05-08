@@ -23,15 +23,12 @@ public class StatistiqueServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        // Toujours charger la liste des voitures pour le menu déroulant de recherche
         List<Voiture> listeVoitures = voitDAO.getAll();
         request.setAttribute("listeVoitures", listeVoitures);
 
-        //  Récupérer la recette totale 
         int recetteTotale = resDAO.getRecetteTotale();
         request.setAttribute("recetteTotale", recetteTotale);
 
-        //  Gestion de la recherche des voyageurs par statut
         String idvoit = request.getParameter("idvoit");
 
         if (idvoit != null && !idvoit.isEmpty()) {
@@ -41,7 +38,7 @@ public class StatistiqueServlet extends HttpServlet {
 
             int nbVoyageursSansAvance = 0;
             for (Reservation r : sansAvance)
-                nbVoyageursSansAvance += 1; 
+                nbVoyageursSansAvance += 1;
 
             int nbVoyageursAvecAvance = 0;
             for (Reservation r : avecAvance)
@@ -56,7 +53,7 @@ public class StatistiqueServlet extends HttpServlet {
             request.setAttribute("nbSansAvance", sansAvance.size());
             request.setAttribute("nbAvecAvance", avecAvance.size());
             request.setAttribute("nbToutPaye", toutPaye.size());
-            
+
             Voiture voitureSelectionnee = voitDAO.getById(idvoit);
             request.setAttribute("voitureDetails", voitureSelectionnee);
             request.setAttribute("selectedVoit", idvoit);

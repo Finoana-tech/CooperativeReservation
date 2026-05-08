@@ -60,6 +60,7 @@
             min-height: 100vh; 
             display: flex; 
             flex-direction: column; 
+            padding-top: 20px;
         }
 
         .main-header { 
@@ -68,28 +69,14 @@
             padding: 30px 0; 
         }
 
-        .stat-bar-container {
-            background-color: #e9ecef;
-            padding: 20px 0;
-            border-bottom: 1px solid #dee2e6;
-            margin-bottom: 30px;
-        }
 
-        .recette-box {
-            background-color: var(--white);
-            border-left: 5px solid #198754;
-            padding: 15px 25px;
-            border-radius: 4px;
-            display: inline-block;
-        }
-
-        .content-wrapper { flex: 1; margin-bottom: 40px; }
+        .content-wrapper { flex: 1; margin-bottom: 40px;  padding-top:60px; }
 
         .table-container { 
             background: var(--white); 
             border: 1px solid #dee2e6; 
             border-radius: 4px; 
-            padding: 25px; 
+            padding-top: 25px; 
         }
         
         .table-title { 

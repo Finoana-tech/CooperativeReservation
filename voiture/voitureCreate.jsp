@@ -131,7 +131,6 @@
         <div class="form-title text-center">Enregistrement d'un nouveau véhicule</div>
         
         <form action="${pageContext.request.contextPath}/VoitureServlet" method="post">
-            <%-- On utilise un champ caché pour l'action add --%>
             <input type="hidden" name="action" value="add">
             
             <div class="row">
@@ -180,7 +179,6 @@
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<%-- Chemin corrigé pour scripts.js --%>
 <script src="${pageContext.request.contextPath}/js/scripts.js"></script>
 
 </body>

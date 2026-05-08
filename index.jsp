@@ -1,5 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%-- Définir la page courante pour le header --%>
 <%
     String currentPage = "accueil";
 %>
@@ -11,7 +10,6 @@
     <title>Accueil - Gestion Cooperative</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/App.css">
     <style>
-        /* Styles spécifiques à cette page */
         .welcome-message {
             text-align: center;
             margin-bottom: 40px;
@@ -107,7 +105,6 @@
     </div>
 </div>
 
-<!-- Footer -->
 <footer class="main-footer">
     <div class="header-container">
         <p>&copy; 2026 COOPERATIVE DE TRANSPORT - Tous droits réservés</p>
