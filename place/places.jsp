@@ -84,7 +84,7 @@
         <div class="col-lg-9">
             <div class="card shadow-sm border-0">
                 <div class="card-header bg-white py-3 border-bottom">
-                    <h5 class="mb-0 text-primary">Visualisation du plan de voyage</h5>
+                    <h3 class="mb-0 text-primary">Visualisation du plan de voyage</h3>
                 </div>
                 <div class="card-body">
                     

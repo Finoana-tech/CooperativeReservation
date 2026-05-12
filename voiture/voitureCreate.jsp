@@ -55,6 +55,7 @@
 
         .content-wrapper {
             flex: 1;
+            padding-top: 80px;
         }
 
         .form-card {
@@ -113,19 +114,6 @@
     <jsp:include page="../includes/header.jsp" />
 </header>
 
-<section class="search-bar-container">
-    <div class="container text-center">
-        <a href="${pageContext.request.contextPath}/index.jsp" class="btn-home">Retour à l'accueil</a>
-        
-        <form action="${pageContext.request.contextPath}/VoitureServlet" method="GET" class="mx-auto" style="max-width: 600px;">
-            <div class="input-group">
-                <input type="text" name="search" class="form-control" placeholder="Rechercher une voiture...">
-                <button type="submit" class="btn btn-dark text-uppercase fw-bold">Rechercher</button>
-            </div>
-        </form>
-    </div>
-</section>
-
 <div class="container content-wrapper">
     <div class="form-card">
         <div class="form-title text-center">Enregistrement d'un nouveau véhicule</div>
@@ -164,7 +152,7 @@
                 </div>
             </div>
 
-            <button type="submit" class="btn-validate">Valider l'ajout</button>
+            <button type="submit" class="btn-validate">Enregistrer la voiture</button>
         </form>
 
         <a href="${pageContext.request.contextPath}/VoitureServlet" class="back-action">ANNULER ET RETOURNER A LA LISTE</a>

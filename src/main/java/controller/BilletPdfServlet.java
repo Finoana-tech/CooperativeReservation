@@ -15,9 +15,6 @@ import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.PageSize;
-import com.itextpdf.text.Phrase;
-import com.itextpdf.text.pdf.PdfPCell;
-import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 
 import dao.ReservationDAO;
@@ -27,9 +24,40 @@ import model.Reservation;
 import model.Client;
 import model.Voiture;
 
+import java.sql.Timestamp;
+import java.sql.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
+
 @WebServlet("/BilletPdfServlet")
 public class BilletPdfServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
+
+    private String formatDateFR(Object dateObj) {
+        if (dateObj == null)
+            return "";
+        try {
+            LocalDate date = null;
+            if (dateObj instanceof String) {
+                String dateStr = ((String) dateObj).trim();
+                if (dateStr.isEmpty())
+                    return "";
+                String dateOnly = dateStr.substring(0, 10);
+                date = LocalDate.parse(dateOnly);
+            } else if (dateObj instanceof Timestamp) {
+                date = ((Timestamp) dateObj).toLocalDateTime().toLocalDate();
+            } else if (dateObj instanceof Date) {
+                date = ((Date) dateObj).toLocalDate();
+            } else {
+                return dateObj.toString();
+            }
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMMM yyyy", Locale.FRENCH);
+            return date.format(formatter);
+        } catch (Exception e) {
+            return dateObj.toString();
+        }
+    }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -44,6 +72,7 @@ public class BilletPdfServlet extends HttpServlet {
             Client client = clientDAO.getById(res.getIdcli());
             Voiture voiture = voitureDAO.getById(res.getIdvoit());
 
+            // Récupération de toutes les places liées à cette réservation groupée
             List<Reservation> toutesLesPlaces = resDAO.getPlacesByClientAndVoitureAndDate(
                     res.getIdcli(),
                     res.getIdvoit(),
@@ -53,16 +82,13 @@ public class BilletPdfServlet extends HttpServlet {
             response.setHeader("Content-Disposition", "inline; filename=Recu_" + idreserv + ".pdf");
 
             Document document = new Document(PageSize.A6, 25, 25, 25, 25);
-
             try {
                 PdfWriter.getInstance(document, response.getOutputStream());
                 document.open();
 
-                // Polices
                 Font titleFont = new Font(Font.FontFamily.HELVETICA, 14, Font.BOLD);
                 Font boldFont = new Font(Font.FontFamily.HELVETICA, 11, Font.BOLD);
                 Font normalFont = new Font(Font.FontFamily.HELVETICA, 10, Font.NORMAL);
-                Font smallFont = new Font(Font.FontFamily.HELVETICA, 9, Font.NORMAL);
                 Font footerFont = new Font(Font.FontFamily.HELVETICA, 8, Font.ITALIC);
 
                 // EN-TÊTE
@@ -75,32 +101,24 @@ public class BilletPdfServlet extends HttpServlet {
                 document.add(subtitle);
 
                 document.add(new Paragraph("───────────────────────────────", normalFont));
-
                 document.add(new Paragraph("Reçu N° : " + res.getIdreserv(), boldFont));
-
-                document.add(new Paragraph("Date de réservation : " + res.getDateReserv(), normalFont));
-                document.add(new Paragraph("Date du voyage      : " + res.getDateVoyage(), normalFont));
-
+                document.add(new Paragraph("Date de réservation : " + formatDateFR(res.getDateReserv()), normalFont));
+                document.add(new Paragraph("Date du voyage     : " + formatDateFR(res.getDateVoyage()), normalFont));
                 document.add(new Paragraph("───────────────────────────────", normalFont));
 
-                // INFORMATIONS CLIENT
                 if (client != null) {
                     document.add(new Paragraph("Nom du Client : " + client.getNom(), boldFont));
                     document.add(new Paragraph("Contact       : " + client.getNumtel(), normalFont));
-                } else {
-                    document.add(new Paragraph("Client ID : " + res.getIdcli(), normalFont));
                 }
 
                 document.add(new Paragraph("───────────────────────────────", normalFont));
 
-                // INFORMATIONS VOITURE ET PLACES
                 if (voiture != null) {
                     document.add(new Paragraph("Voiture N° : " + voiture.getIdvoit(), boldFont));
                     document.add(new Paragraph("Type       : " + voiture.getType(), normalFont));
 
-                    // Affichage des places réservées
+                    // Gestion de l'affichage des places
                     if (toutesLesPlaces != null && !toutesLesPlaces.isEmpty()) {
-                        // Construction de la liste des numéros de places
                         StringBuilder placesStr = new StringBuilder();
                         for (int i = 0; i < toutesLesPlaces.size(); i++) {
                             if (i > 0)
@@ -111,44 +129,38 @@ public class BilletPdfServlet extends HttpServlet {
                     } else {
                         document.add(new Paragraph("Place N° : " + res.getPlace(), normalFont));
                     }
-                } else {
-                    document.add(new Paragraph("Voiture ID : " + res.getIdvoit(), normalFont));
-                    document.add(new Paragraph("Place N° : " + res.getPlace(), normalFont));
                 }
 
                 document.add(new Paragraph(" "));
                 document.add(new Paragraph("───────────────────────────────", normalFont));
 
+                // LOGIQUE DE CALCUL
                 if (voiture != null) {
-                    document.add(new Paragraph("Frais : " + voiture.getFrais() + " Ar/place", boldFont));
-                }
+                    int prixParPlace = voiture.getFrais();
+                    int nombrePlaces = (toutesLesPlaces != null) ? toutesLesPlaces.size() : 1;
+                    int fraisTotalGroupe = prixParPlace * nombrePlaces;
 
-                String statutPaiement = res.getPayment();
-                String statutAffichage = statutPaiement;
-                if ("sans avance".equalsIgnoreCase(statutPaiement)) {
-                    statutAffichage = "Sans Avance";
-                } else if ("avec avance".equalsIgnoreCase(statutPaiement)) {
-                    statutAffichage = "Avec Avance";
-                } else if ("tout payé".equalsIgnoreCase(statutPaiement)) {
-                    statutAffichage = "Tout Payé";
-                }
-
-                document.add(new Paragraph("Paiement : " + statutAffichage, normalFont));
-
-                // Calcul et affichage du reste à payer
-                if (voiture != null) {
-                    int fraisTotal = voiture.getFrais() * (toutesLesPlaces != null ? toutesLesPlaces.size() : 1);
-                    int montantAvance = res.getMontantAvance();
-                    int resteAPayer = fraisTotal - montantAvance;
-
-                    document.add(new Paragraph("Montant Avance : " + montantAvance + " Ar", normalFont));
-                    if (resteAPayer > 0) {
-                        document.add(new Paragraph("Reste à payer  : " + resteAPayer + " Ar", boldFont));
+                    // On additionne les avances de TOUTES les lignes du groupe
+                    int sommeAvances = 0;
+                    if (toutesLesPlaces != null) {
+                        for (Reservation rGroup : toutesLesPlaces) {
+                            sommeAvances += rGroup.getMontantAvance();
+                        }
                     } else {
-                        document.add(new Paragraph("Tout est payé !", boldFont));
+                        sommeAvances = res.getMontantAvance();
                     }
-                } else {
-                    document.add(new Paragraph("Montant Avance : " + res.getMontantAvance() + " Ar", normalFont));
+
+                    int resteAPayer = fraisTotalGroupe - sommeAvances;
+
+                    document.add(new Paragraph(
+                            "Frais total (" + nombrePlaces + " places) : " + fraisTotalGroupe + " Ar", boldFont));
+                    document.add(new Paragraph("Total Avances versées : " + sommeAvances + " Ar", normalFont));
+
+                    if (resteAPayer > 0) {
+                        document.add(new Paragraph("Reste à payer total : " + resteAPayer + " Ar", boldFont));
+                    } else {
+                        document.add(new Paragraph("Statut : TOUT EST PAYÉ !", boldFont));
+                    }
                 }
 
                 document.add(new Paragraph(" "));

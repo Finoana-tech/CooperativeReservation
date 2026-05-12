@@ -26,6 +26,7 @@
         .btn-validate { background-color: var(--primary-color); color: white; border: none; padding: 15px; width: 100%; font-weight: bold; text-transform: uppercase; margin-top: 15px; border-radius: 4px; transition: 0.3s; cursor: pointer; }
         .btn-validate:hover { background-color: #2a4d7d; transform: translateY(-2px); }
         
+        
         /* GRILLE ET ETATS DES PLACES */
         .seat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-top: 15px; background: #f1f3f5; padding: 20px; border-radius: 8px; }
         .seat { padding: 12px; text-align: center; border-radius: 6px; font-weight: bold; font-size: 0.9rem; transition: 0.2s; min-width: 45px; }

@@ -26,7 +26,7 @@ public class ReservationServlet extends HttpServlet {
 
         try {
             if ("create".equals(action) || "update".equals(action)) {
-                // 1. Détermination du code de réservation
+
                 String idReserv = ("update".equals(action)) ? request.getParameter("idreserv")
                         : resDAO.genererProchainCodeReserv();
 
