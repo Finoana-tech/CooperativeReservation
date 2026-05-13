@@ -31,10 +31,8 @@ public class VoitureDAO {
             pstmt.setString(3, v.getType());
             pstmt.setInt(4, v.getNbrplace());
             pstmt.setInt(5, v.getFrais());
-
             int result = pstmt.executeUpdate();
             if (result > 0) {
-                // On passe aussi le TYPE pour le nommage des places
                 genererPlaces(v.getIdvoit(), v.getNbrplace(), v.getType());
             }
             return result > 0;
@@ -48,17 +46,13 @@ public class VoitureDAO {
         String sql = "INSERT INTO place (idvoit, place, occupation, nom_place) VALUES (?, ?, 'non', ?)";
         try (Connection conn = DatabaseConnection.getConnection();
                 PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
             for (int i = 1; i <= nbrplace; i++) {
                 String nomGenere = "";
-
-                // Logique de nommage selon la position
                 if (i == 1) {
                     nomGenere = "Chauffeur";
                 } else if (i <= 3) {
                     nomGenere = "Cabine Avant";
                 } else {
-                    // Calcul du rang/banc
                     if ("VIP".equalsIgnoreCase(type)) {
                         int rang = ((i - 4) / 2) + 1;
                         nomGenere = "VIP - Rang " + rang;
@@ -67,7 +61,6 @@ public class VoitureDAO {
                         nomGenere = "Banc " + banc;
                     }
                 }
-
                 pstmt.setString(1, idvoit);
                 pstmt.setInt(2, i);
                 pstmt.setString(3, nomGenere);
@@ -77,23 +70,6 @@ public class VoitureDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }
-
-    // Utilitaire de nommage pour la précision du projet
-    private String determinerNomPlace(int i, String type) {
-        if (i == 1)
-            return "Chauffeur";
-        if (i <= 3)
-            return "Cabine Avant";
-
-        // Calcul du rang après la cabine
-        int rang = ((i - 4) / 3) + 1;
-
-        if ("VIP".equalsIgnoreCase(type))
-            return "VIP - Rang " + rang;
-        if ("premium".equalsIgnoreCase(type))
-            return "Premium - Banc " + rang;
-        return "Banc " + rang;
     }
 
     public boolean modifier(Voiture v) {
@@ -119,13 +95,10 @@ public class VoitureDAO {
             conn.setAutoCommit(false);
             try (PreparedStatement pst1 = conn.prepareStatement(sqlPlaces);
                     PreparedStatement pst2 = conn.prepareStatement(sqlVoiture)) {
-
                 pst1.setString(1, idvoit);
                 pst1.executeUpdate();
-
                 pst2.setString(1, idvoit);
                 int res = pst2.executeUpdate();
-
                 conn.commit();
                 return res > 0;
             } catch (SQLException e) {
@@ -171,6 +144,24 @@ public class VoitureDAO {
             e.printStackTrace();
         }
         return voitures;
+    }
+
+    // ==================== NOUVELLE MÉTHODE AJOUTÉE ====================
+    public boolean idExiste(String idvoit) {
+        String sql = "SELECT COUNT(*) FROM voiture WHERE idvoit = ?";
+        try (Connection conn = DatabaseConnection.getConnection();
+                PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, idvoit);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1) > 0;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     private Voiture mapResultSetToVoiture(ResultSet rs) throws SQLException {

@@ -1,7 +1,6 @@
-/**
+/*
  * scripts.js - Gestion globale des notifications et confirmations
  */
-
 function confirmerSuppression(id, detail, servletUrl) {
     Swal.fire({
         title: 'Êtes-vous sûr ?',
@@ -10,7 +9,7 @@ function confirmerSuppression(id, detail, servletUrl) {
         showCancelButton: true,
         confirmButtonColor: '#1a3a5f',
         cancelButtonColor: '#dc3545',
-        confirmButtonText: 'Oui, supprimer !',
+        confirmButtonText: 'Oui, supprimer',
         cancelButtonText: 'Annuler',
         reverseButtons: true
     }).then((result) => {
@@ -23,11 +22,24 @@ function confirmerSuppression(id, detail, servletUrl) {
 function verifierNotifications() {
     const urlParams = new URLSearchParams(window.location.search);
     if (urlParams.has('msg')) {
-        const msg = urlParams.get('msg');
+        let msg = urlParams.get('msg');
+        
         let iconType = 'success';
         let titleText = 'Succès !';
 
-        if (msg.toLowerCase().includes('erreur') || msg.toLowerCase().includes('impossible') || msg.toLowerCase().includes('dépasse')) {
+        const lowerMsg = msg.toLowerCase().trim();
+
+        // Détection beaucoup plus large des erreurs
+        if (lowerMsg.includes('existe déjà') || 
+            lowerMsg.includes('déjà existant') || 
+            lowerMsg.includes('déjà utilisé') ||
+            lowerMsg.includes('erreur') || 
+            lowerMsg.includes('impossible') || 
+            lowerMsg.includes('invalide') ||
+            lowerMsg.includes('échoué') ||
+            lowerMsg.includes('dépasse') ||
+            lowerMsg.startsWith('l\'id de voiture')) {   
+            
             iconType = 'error';
             titleText = 'Attention';
         }
@@ -36,8 +48,10 @@ function verifierNotifications() {
             title: titleText,
             text: msg,
             icon: iconType,
-            confirmButtonColor: '#1a3a5f'
+            confirmButtonColor: '#1a3a5f',
+            confirmButtonText: 'OK'
         });
+
         window.history.replaceState({}, document.title, window.location.pathname);
     }
 }
@@ -45,15 +59,13 @@ function verifierNotifications() {
 function validerMontantAvance(event, prixUnitaire) {
     const placesInput = document.getElementById('place').value;
     const nbPlaces = placesInput.split(',').filter(p => p.trim() !== "").length;
-    
+   
     const avanceSaisie = parseInt(document.getElementById('montant_avance').value) || 0;
     const typePaiement = document.getElementById('payment').value;
-    
+   
     const totalFrais = prixUnitaire * nbPlaces;
-
     if (typePaiement === "avec avance" && avanceSaisie > totalFrais) {
-        event.preventDefault(); 
-
+        event.preventDefault();
         Swal.fire({
             title: 'Montant invalide',
             text: 'L\'avance (' + avanceSaisie + ' Ar) ne peut pas être supérieure au total des frais (' + totalFrais + ' Ar pour ' + nbPlaces + ' place(s)).',
